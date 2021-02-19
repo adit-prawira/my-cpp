@@ -197,6 +197,33 @@ recur/hanoi.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_cpp.dir/build.make CMakeFiles/my_cpp.dir/recur/hanoi.cpp.s
 .PHONY : recur/hanoi.cpp.s
 
+vect/vect.o: vect/vect.cpp.o
+
+.PHONY : vect/vect.o
+
+# target to build an object file
+vect/vect.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_cpp.dir/build.make CMakeFiles/my_cpp.dir/vect/vect.cpp.o
+.PHONY : vect/vect.cpp.o
+
+vect/vect.i: vect/vect.cpp.i
+
+.PHONY : vect/vect.i
+
+# target to preprocess a source file
+vect/vect.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_cpp.dir/build.make CMakeFiles/my_cpp.dir/vect/vect.cpp.i
+.PHONY : vect/vect.cpp.i
+
+vect/vect.s: vect/vect.cpp.s
+
+.PHONY : vect/vect.s
+
+# target to generate assembly for a file
+vect/vect.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_cpp.dir/build.make CMakeFiles/my_cpp.dir/vect/vect.cpp.s
+.PHONY : vect/vect.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -212,6 +239,9 @@ help:
 	@echo "... recur/hanoi.o"
 	@echo "... recur/hanoi.i"
 	@echo "... recur/hanoi.s"
+	@echo "... vect/vect.o"
+	@echo "... vect/vect.i"
+	@echo "... vect/vect.s"
 .PHONY : help
 
 

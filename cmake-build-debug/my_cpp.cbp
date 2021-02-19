@@ -88,6 +88,12 @@
 		<Unit filename="/Users/adityaaaap/Desktop/ProgExer/my-cpp/recur/hanoi.cpp">
 			<Option target="my_cpp"/>
 		</Unit>
+		<Unit filename="/Users/adityaaaap/Desktop/ProgExer/my-cpp/vect/vect.cpp">
+			<Option target="my_cpp"/>
+		</Unit>
+		<Unit filename="/Users/adityaaaap/Desktop/ProgExer/my-cpp/vect/vect.h">
+			<Option target="my_cpp"/>
+		</Unit>
 		<Unit filename="/Users/adityaaaap/Desktop/ProgExer/my-cpp/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
