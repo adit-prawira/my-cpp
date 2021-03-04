@@ -11,7 +11,7 @@ struct Array
 
 void Display(struct Array arr){
     int i;
-    printf("Elements are: ");
+    printf("\nElements are: ");
     for (i = 0; i< arr.length; i++){
         printf("%d ", arr.A[i]);
     };
@@ -220,12 +220,33 @@ void SwapReverse(struct Array *arr){
     cout << "\nArray is reversed by swapping" << endl;
 };
 
+// Insert Element in sorted order
+void InsertSort(struct Array *arr, int newVal){
+    int i = arr->length-1;
+    if (arr->length == arr->size)
+    {
+        // return early because there are no space left
+        return;
+    }
+    while(i >= 0 && arr->A[i] > newVal){
+        // as long as element in A is larger than the new value then shift those element to the right
+        // and if index reaches 0, the loop will be terminated
+        arr->A[i + 1] = arr->A[i];
+        i--;
+    }
+    // i will be any of the last value of i when loop being ended
+    arr->A[i + 1] = newVal;
+    arr->length++;
+    cout << "\nInsert value of " << newVal << " at index " << i+1;
+};
+
 int main()
 {
-    // array  in this case is arr
+    // array  in this case is arrs
     // size = 10
     // length 5 which is the current length and there are 5 spaces left to reach maximum elemnts which is 10
     struct Array arr = {{2, 3, 4, 5, 6}, 10, 5};
+    struct Array arr2 = {{2, 3, 5, 6}, 10, 4};
     int index = 5;
     Append(&arr, 10);   // 2 3 4 5 6 10
     Insert(&arr, 3, 7); // 2 3 4 7 5 6 10
@@ -247,5 +268,12 @@ int main()
     Display(arr);
     SwapReverse(&arr);
     Display(arr);
+    InsertSort(&arr2, 1);
+    InsertSort(&arr2, 10);
+    InsertSort(&arr2, 8);
+    InsertSort(&arr2, 9);
+    InsertSort(&arr2, 4);
+    InsertSort(&arr2, 7);
+    Display(arr2);
     return 0;
 };
