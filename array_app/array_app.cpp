@@ -357,6 +357,38 @@ struct Array* Intersection(struct Array *arr1, struct Array *arr2){
     arr3->size = 10;
     return arr3;
 };
+
+// Difference Set
+struct Array* Difference(struct Array *arr1, struct Array *arr2){
+    int i, j, k;
+    i = j = k = 0;
+    // Create arr3 from Heap
+    struct Array *arr3 = (struct Array *)malloc(sizeof(struct Array));
+    // compare values of arr1[i] and arr2[j] if the value if arr1[i] < arr2[j]
+    // then in arr3[k], value of arr1[i] comes first before arr2[j] 
+    // if arr1[i] == arr2[j] then only add the same value to arr3 from either arr1 or arr2
+    while(i < arr1 -> length && j < arr2 -> length){
+        if(arr1->A[i] < arr2->A[j]){
+            arr3->A[k++] = arr1->A[i++];
+        }else if(arr2->A[j] < arr1->A[i]){
+            j++;
+        }
+        else
+        {
+            i++;
+            j++;
+        }
+    }
+    // Only copy the remaining elements from arr1
+    for(; i<arr1->length; i++){
+        arr3->A[k++] = arr1->A[i];
+    }
+
+    arr3->length = k;
+    arr3->size = 10;
+    return arr3;
+};
+
 void test1()
 {
     // array  in this case is arrs
@@ -430,12 +462,39 @@ void test5(){
     Display(*arr3);
 }
 
+//Difference Test
+void test6(){
+    struct Array arr1 = {{2, 6, 10, 15, 25}, 10, 5};
+    struct Array arr2 = {{3, 6, 7, 15, 20}, 10, 5};
+    struct Array *arr3;
+    arr3 = Difference(&arr1, &arr2);
+    Display(*arr3);
+}
 int main()
 {
-    //test1();
-    //test2();
-    //test3();
-    //test4();
-    test5();
+    int query;
+    cin >> query;
+    switch (query){
+        case 1:
+            test1();
+            break;
+        case 2:
+            test2();
+            break;
+        case 3:
+            test3();
+            break;
+        case 4:
+            test4();
+            break;
+        case 5:
+            test5();
+            break;
+        case 6:
+            test6();
+            break;
+        default:
+            test1();
+    }
     return 0;
 };
