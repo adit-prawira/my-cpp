@@ -329,6 +329,34 @@ struct Array* Union(struct Array *arr1, struct Array *arr2){
     arr3->size = 10;
     return arr3;
 };
+
+//Intersection
+struct Array* Intersection(struct Array *arr1, struct Array *arr2){
+    int i, j, k;
+    i = j = k = 0;
+    // Create arr3 from Heap
+    struct Array *arr3 = (struct Array *)malloc(sizeof(struct Array));
+    // compare values of arr1[i] and arr2[j] if the value if arr1[i] < arr2[j]
+    // then in arr3[k], value of arr1[i] comes first before arr2[j] 
+    // if arr1[i] == arr2[j] then only add the same value to arr3 from either arr1 or arr2
+    while(i < arr1 -> length && j < arr2 -> length){
+        if(arr1->A[i] < arr2->A[j]){
+            i++;
+        }
+        else if (arr2->A[j] < arr1->A[i])
+        {
+            j++;
+        }
+        else
+        {
+            arr3->A[k++] = arr1->A[i++];
+            j++;
+        }
+    }
+    arr3->length = k;
+    arr3->size = 10;
+    return arr3;
+};
 void test1()
 {
     // array  in this case is arrs
@@ -384,7 +412,7 @@ void test3(){
     arr3 = Merge(&arr1, &arr2);
     Display(*arr3);
 }
-
+//Union Test
 void test4(){
     struct Array arr1 = {{2, 6, 10, 15, 25}, 10, 5};
     struct Array arr2 = {{3, 6, 7, 15, 20}, 10, 5};
@@ -393,11 +421,21 @@ void test4(){
     Display(*arr3);
 }
 
+//Intersection Test
+void test5(){
+    struct Array arr1 = {{2, 6, 10, 15, 25}, 10, 5};
+    struct Array arr2 = {{3, 6, 7, 15, 20}, 10, 5};
+    struct Array *arr3;
+    arr3 = Intersection(&arr1, &arr2);
+    Display(*arr3);
+}
+
 int main()
 {
     //test1();
     //test2();
     //test3();
-    test4();
+    //test4();
+    test5();
     return 0;
 };
