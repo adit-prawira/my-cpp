@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <math.h>
 struct Array{
     int A[10];
     int size;
@@ -96,6 +96,30 @@ int AdvancedLinearSearch(struct Array *arr, int key){
     printf("%d is not found\n", key);
     return -1;
 };
+
+// Binary Search
+int BinarySearch(struct Array arr, int key){
+    int low, mid, high;
+    low = 0;
+    high = arr.length - 1;
+    while (low <= high)
+    {
+        mid = floor((low + high) / 2);
+        if(key == arr.A[mid]){
+            printf("%d is found at index %d", key, mid);
+            return mid;
+        }else if (key < arr.A[mid]){
+            low = mid + 1;
+        }else{
+            high = mid - 1;
+        }
+    };
+    printf("%d is not found", key);
+    return -1;
+};
+
+// Recursive Binary Search
+
 int main()
 {
     // array  in this case is arr
@@ -105,8 +129,9 @@ int main()
     Append(&arr, 10); // 2 3 4 5 6 10
     Insert(&arr, 3, 7); // 2 3 4 7 5 6 10
     printf("Element of %d is being deleted from Array\n", Delete(&arr, 2)); // Current array 2 3 7 5 6 10
-    printf("\nLinear Search: Element of %d in array\n", LinearSearch(arr, 6));
-    printf("\nAdvanced Linear Search: Element of %d in array\n", AdvancedLinearSearch(&arr, 6)); // Current array 2 3 7 6 5 10 
+    printf("\nLinear Search: Item found at index %d in array\n", LinearSearch(arr, 6));
+    printf("\nAdvanced Linear Search: Item found at index %d in array\n", AdvancedLinearSearch(&arr, 6)); // Current array 2 3 7 6 5 10 
+    printf("\nBinary Search: Item found at index %d in array\n", BinarySearch(arr, 6)); // Current array 2 3 7 6 5 10 
     Display(arr);
     return 0;
 };
