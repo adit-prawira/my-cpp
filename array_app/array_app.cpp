@@ -64,7 +64,7 @@ int LinearSearch(struct Array arr, int key){
     int i;
     for(i = 0; i< arr.length; i++){
         if(key == arr.A[i]){
-            printf("%d is found at index %d", key, i);
+            printf("\n%d is found at index %d", key, i);
             return i;
         }
     }
@@ -89,7 +89,7 @@ int AdvancedLinearSearch(struct Array *arr, int key){
             // 6 is found and swap is value will its preceding value which is 5
             // Then, 2 3 7 6 5 10
             swap(&arr->A[i], &arr->A[i - 1]);
-            printf("%d is found at index %d", key, i);
+            printf("\n%d is found at index %d", key, i);
             return i;
         }
     }
@@ -106,7 +106,7 @@ int BinarySearch(struct Array arr, int key){
     {
         mid = floor((low + high) / 2);
         if(key == arr.A[mid]){
-            printf("%d is found at index %d", key, mid);
+            printf("\n%d is found at index %d", key, mid);
             return mid;
         }else if (key < arr.A[mid]){
             low = mid + 1;
@@ -119,6 +119,23 @@ int BinarySearch(struct Array arr, int key){
 };
 
 // Recursive Binary Search
+int RecursiveBinarySearch(int a[], int low, int high, int key){
+    int mid;
+    if(low <= mid){
+        mid = floor((low + high) / 2);
+        if(key == a[mid]){
+            printf("\n%d is found at index %d", key, mid);
+            return mid;
+        }else if (key < a[mid]){
+            return RecursiveBinarySearch(a, mid + 1, high, key);
+        }
+        else
+        {
+            return RecursiveBinarySearch(a, low, mid - 1, key);
+        }
+    }
+    return -1;
+};
 
 int main()
 {
@@ -131,7 +148,8 @@ int main()
     printf("Element of %d is being deleted from Array\n", Delete(&arr, 2)); // Current array 2 3 7 5 6 10
     printf("\nLinear Search: Item found at index %d in array\n", LinearSearch(arr, 6));
     printf("\nAdvanced Linear Search: Item found at index %d in array\n", AdvancedLinearSearch(&arr, 6)); // Current array 2 3 7 6 5 10 
-    printf("\nBinary Search: Item found at index %d in array\n", BinarySearch(arr, 6)); // Current array 2 3 7 6 5 10 
+    printf("\nBinary Search: Item found at index %d in array\n", BinarySearch(arr, 6)); 
+    printf("\nRecursive Binary Search: Item found at index %d in array\n", RecursiveBinarySearch(arr.A, 0, arr.length, 6)); 
     Display(arr);
     return 0;
 };
