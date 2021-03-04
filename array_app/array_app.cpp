@@ -15,6 +15,7 @@ void Display(struct Array arr){
     for (i = 0; i< arr.length; i++){
         printf("%d ", arr.A[i]);
     };
+    cout << endl;
 };
 
 void Append(struct Array *arr, int x){
@@ -249,6 +250,29 @@ int isSorted(struct Array arr){
     }
     return 1;
 }
+
+int partition(int a[], int low, int high){
+    int i, j, pivot;
+    pivot = a[high];
+    i = (low - 1);
+    for(j = low; j< high; j++){
+        if(a[j] <= pivot){
+            i++;
+            swap(&a[i], &a[j]);
+        }
+    }
+    swap(&a[i+1], &a[high]);
+    return (i + 1);
+
+};
+void QuickSort(struct Array *arr, int low, int high)
+{
+    if(low < high){
+        int pi = partition(arr->A, low, high);
+        QuickSort(arr, low, pi -1);
+        QuickSort(arr, pi+1, high);
+    }
+};
 int main()
 {
     // array  in this case is arrs
@@ -256,6 +280,7 @@ int main()
     // length 5 which is the current length and there are 5 spaces left to reach maximum elemnts which is 10
     struct Array arr = {{2, 3, 4, 5, 6}, 10, 5};
     struct Array arr2 = {{2, 3, 5, 6}, 10, 4};
+    struct Array arr3 = {{2, -3, 25, 10, -15, -7}, 10, 6};
     int index = 5;
     Append(&arr, 10);   // 2 3 4 5 6 10
     Insert(&arr, 3, 7); // 2 3 4 7 5 6 10
@@ -286,5 +311,7 @@ int main()
     Display(arr2);
     cout << "\nArray 1 is sorted: " << isSorted(arr);
     cout << "\nArray 2 is sorted: " << isSorted(arr2);
+    QuickSort(&arr3, 0, arr3.length-1);
+    Display(arr3);
     return 0;
 };
