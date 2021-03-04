@@ -1,6 +1,9 @@
 #include <iostream>
 #include <math.h>
-struct Array{
+#include <cstdlib>
+using namespace std;
+struct Array
+{
     int A[10];
     int size;
     int length;
@@ -190,6 +193,22 @@ float Average(struct Array arr){
     return (float) Sum(arr)/arr.length;
 }
 
+void Reverse(struct Array *arr){
+    int *B; 
+    int i,j;
+
+    // Size of array B must be the same as Array A
+    // Created array B from B.
+    B = (int *)malloc(arr->length*sizeof(int));
+    for (i = arr->length - 1, j = 0; i >= 0; i--, j++){
+        B[j] = arr->A[i];
+    };
+    for(i = 0; i < arr -> length; i++){
+        arr->A[i] = B[i];
+    }
+
+    cout << "\nArray is reversed" << endl;
+};
 
 int main()
 {
@@ -206,13 +225,15 @@ int main()
     // printf("\nBinary Search: Item found at index %d in array\n", BinarySearch(arr, 6)); 
     // printf("\nRecursive Binary Search: Item found at index %d in array\n", RecursiveBinarySearch(arr.A, 0, arr.length, 6));
     Display(arr);
-    printf("Get value at %d: %d\n", index, Get(arr, index));
-    printf("Maximum value: %d\n", Max(arr));
-    printf("Minimum value: %d\n", Min(arr));
-    printf("Sum: %d\n", Sum(arr));
-    printf("Average: %0.3f\n", Average(arr));
+    cout << "Get value at " << index << Get(arr, index) << endl;
+    cout << "Maximum value: " << Max(arr);
+    cout << "Minimum value: " << Min(arr);
+    cout << "Sum: " << Sum(arr);
+    cout << "Average: " << Average(arr);
     Set(&arr, index, 9);
     Display(arr);
-    printf("Average: %0.3f\n", Average(arr));
+    cout << "Average: " << Average(arr);
+    Reverse(&arr);
+    Display(arr);
     return 0;
 };
