@@ -8,7 +8,7 @@ struct Array{
 
 void Display(struct Array arr){
     int i;
-    printf("\nElements are\n");
+    printf("Elements are: ");
     for (i = 0; i< arr.length; i++){
         printf("%d ", arr.A[i]);
     };
@@ -137,19 +137,82 @@ int RecursiveBinarySearch(int a[], int low, int high, int key){
     return -1;
 };
 
+// return value at the specified index
+int Get(struct Array arr, int index){ 
+    if(index >= 0 && index < arr.length){
+        return arr.A[index];
+    };
+    return -1;
+};
+
+// set/change value at the specified index new value
+void Set(struct Array *arr, int index, int newVal){
+    if(index >=0 && index < arr->length){
+        arr->A[index] = newVal;
+        printf("Set value of %d to index %d\n", newVal, index);
+    }else{
+        printf("Index is out of range");
+    };
+}
+
+// Function that will return maximum and minimum value of an array.
+int Max(struct Array arr){
+    int max = arr.A[0];
+    int i;
+    for (i = 0; i < arr.length; i++){
+        if(arr.A[i] > max){
+            max = arr.A[i];
+        }
+    };
+    return max;
+};
+int Min(struct Array arr){
+    int min = arr.A[0];
+    int i;
+    for (i = 0; i < arr.length; i++){
+        if(arr.A[i] < min){
+            min = arr.A[i];
+        }
+    };
+    return min;
+};
+
+int Sum(struct Array arr){
+    int sum = 0;
+    int i;
+    for (i = 0; i< arr.length; i++){
+        sum += arr.A[i];
+    }
+    return sum;
+};
+
+float Average(struct Array arr){
+    return (float) Sum(arr)/arr.length;
+}
+
+
 int main()
 {
     // array  in this case is arr
     // size = 10
     // length 5 which is the current length and there are 5 spaces left to reach maximum elemnts which is 10
     struct Array arr = {{2, 3, 4, 5, 6}, 10, 5};
-    Append(&arr, 10); // 2 3 4 5 6 10
+    int index = 5;
+    Append(&arr, 10);   // 2 3 4 5 6 10
     Insert(&arr, 3, 7); // 2 3 4 7 5 6 10
-    printf("Element of %d is being deleted from Array\n", Delete(&arr, 2)); // Current array 2 3 7 5 6 10
-    printf("\nLinear Search: Item found at index %d in array\n", LinearSearch(arr, 6));
-    printf("\nAdvanced Linear Search: Item found at index %d in array\n", AdvancedLinearSearch(&arr, 6)); // Current array 2 3 7 6 5 10 
-    printf("\nBinary Search: Item found at index %d in array\n", BinarySearch(arr, 6)); 
-    printf("\nRecursive Binary Search: Item found at index %d in array\n", RecursiveBinarySearch(arr.A, 0, arr.length, 6)); 
+    // printf("Element of %d is being deleted from Array\n", Delete(&arr, 2)); // Current array 2 3 7 5 6 10
+    // printf("\nLinear Search: Item found at index %d in array\n", LinearSearch(arr, 6));
+    // printf("\nAdvanced Linear Search: Item found at index %d in array\n", AdvancedLinearSearch(&arr, 6)); // Current array 2 3 7 6 5 10 
+    // printf("\nBinary Search: Item found at index %d in array\n", BinarySearch(arr, 6)); 
+    // printf("\nRecursive Binary Search: Item found at index %d in array\n", RecursiveBinarySearch(arr.A, 0, arr.length, 6));
     Display(arr);
+    printf("Get value at %d: %d\n", index, Get(arr, index));
+    printf("Maximum value: %d\n", Max(arr));
+    printf("Minimum value: %d\n", Min(arr));
+    printf("Sum: %d\n", Sum(arr));
+    printf("Average: %0.3f\n", Average(arr));
+    Set(&arr, index, 9);
+    Display(arr);
+    printf("Average: %0.3f\n", Average(arr));
     return 0;
 };
