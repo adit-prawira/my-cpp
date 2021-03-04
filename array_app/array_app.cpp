@@ -273,7 +273,33 @@ void QuickSort(struct Array *arr, int low, int high)
         QuickSort(arr, pi+1, high);
     }
 };
-int main()
+
+// Merge 2 array in sorted manner
+struct Array* Merge(struct Array *arr1, struct Array *arr2){
+    int i, j, k;
+    i = j = k = 0;
+    // Create arr3 from Heap
+    struct Array *arr3 = (struct Array *)malloc(sizeof(struct Array));
+    // compare values of arr1[i] and arr2[j] if the value if arr1[i] < arr2[j]
+    // then in arr3[k], value of arr1[i] comes first before arr2[j] 
+    while(i < arr1 -> length && j < arr2 -> length){
+        if(arr1->A[i] < arr2->A[j]){
+            arr3->A[k++] = arr1->A[i++];
+        }else{
+            arr3->A[k++] = arr2->A[j++];
+        }
+    }
+    for(; i<arr1->length; i++){
+        arr3->A[k++] = arr1->A[i];
+    }
+    for(; j<arr2->length; j++){
+        arr3->A[k++] = arr2->A[j];
+    }
+    arr3->length = (arr1->length) + (arr2->length);
+    arr3->size = 10;
+    return arr3;
+};
+void test1()
 {
     // array  in this case is arrs
     // size = 10
@@ -313,5 +339,19 @@ int main()
     cout << "\nArray 2 is sorted: " << isSorted(arr2);
     QuickSort(&arr3, 0, arr3.length-1);
     Display(arr3);
+}
+
+void test2(){
+    struct Array arr1 = {{2, 6, 10, 5, 25}, 10, 5};
+    struct Array arr2 = {{3, 4, 7, 18, 20}, 10, 5};
+    struct Array *arr3;
+    arr3 = Merge(&arr1, &arr2);
+    Display(*arr3);
+}
+
+int main()
+{
+    //test1();
+    test2();
     return 0;
 };
