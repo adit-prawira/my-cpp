@@ -299,6 +299,36 @@ struct Array* Merge(struct Array *arr1, struct Array *arr2){
     arr3->size = 10;
     return arr3;
 };
+
+// Union Set
+struct Array* Union(struct Array *arr1, struct Array *arr2){
+    int i, j, k;
+    i = j = k = 0;
+    // Create arr3 from Heap
+    struct Array *arr3 = (struct Array *)malloc(sizeof(struct Array));
+    // compare values of arr1[i] and arr2[j] if the value if arr1[i] < arr2[j]
+    // then in arr3[k], value of arr1[i] comes first before arr2[j] 
+    // if arr1[i] == arr2[j] then only add the same value to arr3 from either arr1 or arr2
+    while(i < arr1 -> length && j < arr2 -> length){
+        if(arr1->A[i] < arr2->A[j]){
+            arr3->A[k++] = arr1->A[i++];
+        }else if(arr2->A[j] < arr1->A[i]){
+            arr3->A[k++] = arr2->A[j++];
+        }else{
+            arr3->A[k++] = arr1->A[i++];
+            j++;
+        }
+    }
+    for(; i<arr1->length; i++){
+        arr3->A[k++] = arr1->A[i];
+    }
+    for(; j<arr2->length; j++){
+        arr3->A[k++] = arr2->A[j];
+    }
+    arr3->length = k;
+    arr3->size = 10;
+    return arr3;
+};
 void test1()
 {
     // array  in this case is arrs
@@ -307,14 +337,20 @@ void test1()
     struct Array arr = {{2, 3, 4, 5, 6}, 10, 5};
     struct Array arr2 = {{2, 3, 5, 6}, 10, 4};
     struct Array arr3 = {{2, -3, 25, 10, -15, -7}, 10, 6};
+    printf("Element of %d is being deleted from Array\n", Delete(&arr, 2)); // Current array 2 3 7 5 6 10
+    printf("\nLinear Search: Item found at index %d in array\n", LinearSearch(arr, 6));
+    printf("\nAdvanced Linear Search: Item found at index %d in array\n", AdvancedLinearSearch(&arr, 6)); // Current array 2 3 7 6 5 10 
+    printf("\nBinary Search: Item found at index %d in array\n", BinarySearch(arr, 6)); 
+    printf("\nRecursive Binary Search: Item found at index %d in array\n", RecursiveBinarySearch(arr.A, 0, arr.length, 6));
+    
+}
+void test2(){
+    struct Array arr = {{2, 3, 4, 5, 6}, 10, 5};
+    struct Array arr2 = {{2, 3, 5, 6}, 10, 4};
+    struct Array arr3 = {{2, -3, 25, 10, -15, -7}, 10, 6};
     int index = 5;
     Append(&arr, 10);   // 2 3 4 5 6 10
     Insert(&arr, 3, 7); // 2 3 4 7 5 6 10
-    // printf("Element of %d is being deleted from Array\n", Delete(&arr, 2)); // Current array 2 3 7 5 6 10
-    // printf("\nLinear Search: Item found at index %d in array\n", LinearSearch(arr, 6));
-    // printf("\nAdvanced Linear Search: Item found at index %d in array\n", AdvancedLinearSearch(&arr, 6)); // Current array 2 3 7 6 5 10 
-    // printf("\nBinary Search: Item found at index %d in array\n", BinarySearch(arr, 6)); 
-    // printf("\nRecursive Binary Search: Item found at index %d in array\n", RecursiveBinarySearch(arr.A, 0, arr.length, 6));
     Display(arr);
     cout << "\nGet value at " << index << Get(arr, index);
     cout << "\nMaximum value: " << Max(arr);
@@ -341,7 +377,7 @@ void test1()
     Display(arr3);
 }
 
-void test2(){
+void test3(){
     struct Array arr1 = {{2, 6, 10, 5, 25}, 10, 5};
     struct Array arr2 = {{3, 4, 7, 18, 20}, 10, 5};
     struct Array *arr3;
@@ -349,9 +385,19 @@ void test2(){
     Display(*arr3);
 }
 
+void test4(){
+    struct Array arr1 = {{2, 6, 10, 15, 25}, 10, 5};
+    struct Array arr2 = {{3, 6, 7, 15, 20}, 10, 5};
+    struct Array *arr3;
+    arr3 = Union(&arr1, &arr2);
+    Display(*arr3);
+}
+
 int main()
 {
     //test1();
-    test2();
+    //test2();
+    //test3();
+    test4();
     return 0;
 };
