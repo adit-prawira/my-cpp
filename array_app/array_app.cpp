@@ -240,6 +240,15 @@ void InsertSort(struct Array *arr, int newVal){
     cout << "\nInsert value of " << newVal << " at index " << i+1;
 };
 
+int isSorted(struct Array arr){
+    int i;
+    for (i = 0; i < arr.length - 1; i++){
+        if(arr.A[i] > arr.A[i+1]){
+            return 0;
+        }
+    }
+    return 1;
+}
 int main()
 {
     // array  in this case is arrs
@@ -275,5 +284,7 @@ int main()
     InsertSort(&arr2, 4);
     InsertSort(&arr2, 7);
     Display(arr2);
+    cout << "\nArray 1 is sorted: " << isSorted(arr);
+    cout << "\nArray 2 is sorted: " << isSorted(arr2);
     return 0;
 };
