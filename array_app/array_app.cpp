@@ -15,7 +15,6 @@ void Display(struct Array arr){
     for (i = 0; i< arr.length; i++){
         printf("%d ", arr.A[i]);
     };
-    printf("\n");
 };
 
 void Append(struct Array *arr, int x){
@@ -152,9 +151,9 @@ int Get(struct Array arr, int index){
 void Set(struct Array *arr, int index, int newVal){
     if(index >=0 && index < arr->length){
         arr->A[index] = newVal;
-        printf("Set value of %d to index %d\n", newVal, index);
+        cout << "\nSet value of " << newVal << " to index " << index << endl;
     }else{
-        printf("Index is out of range");
+        cout << "\nIndex is out of range";
     };
 }
 
@@ -193,7 +192,7 @@ float Average(struct Array arr){
     return (float) Sum(arr)/arr.length;
 }
 
-void Reverse(struct Array *arr){
+void CopyReverse(struct Array *arr){
     int *B; 
     int i,j;
 
@@ -207,7 +206,18 @@ void Reverse(struct Array *arr){
         arr->A[i] = B[i];
     }
 
-    cout << "\nArray is reversed" << endl;
+    cout << "\nArray is copied and reversed" << endl;
+};
+
+void SwapReverse(struct Array *arr){
+    int i, j;
+    // j start at the end, and i start at the start.
+    // for loop will stop when i == j;
+    for (i = 0, j = arr->length-1; i < j; i++, j--)
+    {
+        swap(&arr->A[i], &arr->A[j]);
+    }
+    cout << "\nArray is reversed by swapping" << endl;
 };
 
 int main()
@@ -225,15 +235,17 @@ int main()
     // printf("\nBinary Search: Item found at index %d in array\n", BinarySearch(arr, 6)); 
     // printf("\nRecursive Binary Search: Item found at index %d in array\n", RecursiveBinarySearch(arr.A, 0, arr.length, 6));
     Display(arr);
-    cout << "Get value at " << index << Get(arr, index) << endl;
-    cout << "Maximum value: " << Max(arr);
-    cout << "Minimum value: " << Min(arr);
-    cout << "Sum: " << Sum(arr);
-    cout << "Average: " << Average(arr);
+    cout << "\nGet value at " << index << Get(arr, index);
+    cout << "\nMaximum value: " << Max(arr);
+    cout << "\nMinimum value: " << Min(arr);
+    cout << "\nSum: " << Sum(arr);
+    cout << "\nAverage: " << Average(arr);
     Set(&arr, index, 9);
     Display(arr);
-    cout << "Average: " << Average(arr);
-    Reverse(&arr);
+    cout << "\nAverage: " << Average(arr);
+    CopyReverse(&arr);
+    Display(arr);
+    SwapReverse(&arr);
     Display(arr);
     return 0;
 };
