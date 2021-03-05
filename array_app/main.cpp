@@ -450,7 +450,8 @@ void test4(){
     struct Array arr2 = {{3, 6, 7, 15, 20}, 10, 5};
     struct Array *arr3;
     arr3 = Union(&arr1, &arr2);
-    Display(*arr3);
+    Display(*arr3);1
+
 }
 
 //Intersection Test
@@ -472,6 +473,14 @@ void test6(){
 }
 int main()
 {
+    cout << "Pick an option to compute test" << endl;
+    cout << "1 - for test number 1 which compute delete and search methods" << endl;
+    cout << "2 - for test number 2 which compute appending, inserting and re-arrangin array" << endl;
+    cout << "3 - for test number 3 which compute array merging" << endl;
+    cout << "4 - for test number 4 which compute array union" << endl;
+    cout << "5 - for test number 5 which compute array intersection" << endl;
+    cout << "6 - for test number 6 which compute array differences" << endl;
+
     int query;
     cin >> query;
     switch (query){
