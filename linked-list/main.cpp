@@ -57,6 +57,16 @@ int count(struct Node *node){
         return 0;
     }
 }
+
+
+int sum(struct Node *node){
+    if(node != NULL){
+        return sum(node->next) + node->data;
+    }else{
+        return 0;
+    }
+}
+
 int main()
 {
     int A[] = {3, 5, 7, 10, 15, 8, 12, 20};
@@ -67,6 +77,6 @@ int main()
     cout << "\nRecursive display: ";
     rec_display(first);
     cout << "\nNumber of elements: " << count(first) << endl;
-
+    cout << "\nSum of elements: " << sum(first) << endl;
     return 0;
 }
