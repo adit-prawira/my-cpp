@@ -265,7 +265,8 @@ void test1(){
 }
 void test2(){
     int A[] = {10, 20, 30, 40, 50};
-    create(A, 5);
+    int n = sizeof(A) / sizeof(A[0]);
+    create(A, n);
     sort_insert(first, 35);
     sort_insert(first, 15);
     cout << "\nSorted Insert: ";
@@ -297,20 +298,75 @@ void remove_duplicate(struct Node *node){
             temp_node = node->next;
         }
     }
+}
 
+void reverse(struct Node *node){
+    int *A, i=0;
+    struct Node *traverse_node = node;
+
+    //create array of size of length of the linked list
+    A = (int *)malloc(sizeof(int) * count(node));
+
+    //copying elements from linked list to array
+    while(traverse_node != NULL){
+        A[i] = traverse_node->data;
+        traverse_node = traverse_node->next;
+        i++;
+    }
+    traverse_node = node;
+    i--;
+
+    //copying element from array to linked list
+    while(traverse_node != NULL){
+        traverse_node->data = A[i];
+        traverse_node = traverse_node->next;
+        i--;
+    }
+}
+
+void advance_reverse(struct Node *node){
+    struct Node *q = NULL, *r = NULL;
+
+    while(node != NULL){
+        r = q;
+        q = node;
+        node = node->next;
+        q->next = r;
+    }
+    first = q;
+}
+
+void recursive_reverse(struct Node *previous_node, struct Node *current_node){
+    if(current_node){
+        recursive_reverse(current_node, current_node->next);
+        current_node->next = previous_node;
+    }else{
+        first = previous_node;
+    }
 }
 void test3(){
-    int A[] = {10, 20, 20, 20, 30, 40, 50};
-    create(A, 7);
+    int A[] = {10, 10,10, 20, 20, 20, 30, 40,40,40, 50};
+    int n = sizeof(A) / sizeof(A[0]);
+    create(A, n);
     remove_duplicate(first);
     display(first);
+}
 
+void test4(){
+    int A[] = {10, 20, 30, 40, 50};
+    int n = sizeof(A) / sizeof(A[0]);
+    create(A, n);
+    // reverse(first);
+    //advance_reverse(first);
+    recursive_reverse(NULL, first);
+    display(first);
 }
 
 int main()
 {
     //test1();
     //test2();
-    test3();
+    //test3();
+    test4();
     return 0;
 } 
