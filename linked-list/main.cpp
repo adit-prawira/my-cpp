@@ -107,9 +107,26 @@ struct Node * LinearSearch(struct Node *node, int key){
     }
     return NULL;
 }
+
+
+// Move to front operation linear search node
+struct Node * MoveToFrontLinearSearch(struct Node *node, int key){
+    struct Node *temp;
+    while(node != NULL){
+        if(key == node -> data){
+            temp->next = node->next;
+            node->next = first;
+            first = node;
+            return node;
+        }
+        temp = node;
+        node = node->next;
+    }
+    return NULL;
+}
 int main()
 {
-    struct Node *temp;
+    struct Node *temp, *temp2;
     int A[] = {3, 5, 7, 10, -100, 80, 15, 8, 12, 20};
     int n = sizeof(A) / sizeof(A[0]);
     create(A, n);
@@ -121,10 +138,15 @@ int main()
     cout << "\nSum of elements: " << sum(first) << endl;
     cout << "\nMaximum value: " << max(first) << endl;
     cout << "\nMinimum value: " << min(first) << endl;
-    temp = LinearSearch(first, 6);
-    if(temp){
-        cout << "\nFound value of " << temp->data << " in linked list"<< endl;
-    }else{
+    temp = LinearSearch(first, 12);
+    temp2 = MoveToFrontLinearSearch(first, 12);
+    if (temp && temp2)
+    {
+        cout << "\nRecursive linear search: Found value of " << temp->data << " in linked list"<< endl;
+        cout << "\nMove to front linear search: Found value of " << temp2->data << " in linked list"<< endl;
+    }
+    else
+    {
         cout << "Searched value not found" << endl;
     }
     return 0;
