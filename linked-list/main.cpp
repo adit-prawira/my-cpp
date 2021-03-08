@@ -67,9 +67,38 @@ int sum(struct Node *node){
     }
 }
 
+int max(struct Node *node){
+    int temp_max = 0;
+    if (node != NULL)
+    {
+        // temp is the value return by max method when analyzing the next Node
+        temp_max = max(node->next);
+        if(temp_max > node->data){
+            return temp_max;
+        }else{
+            return node->data;
+        }
+    }
+    return INT32_MIN;
+}
+
+int min(struct Node *node){
+    int temp_min = 0;
+    if (node != NULL)
+    {
+        // temp is the value return by max method when analyzing the next Node
+        temp_min = min(node->next);
+        if(temp_min < node->data){
+            return temp_min;
+        }else{
+            return node->data;
+        }
+    }
+    return INT32_MAX;
+}
 int main()
 {
-    int A[] = {3, 5, 7, 10, 15, 8, 12, 20};
+    int A[] = {3, 5, 7, 10, -100, 80, 15, 8, 12, 20};
     int n = sizeof(A) / sizeof(A[0]);
     create(A, n);
     cout << "Iterative display: ";
@@ -78,5 +107,7 @@ int main()
     rec_display(first);
     cout << "\nNumber of elements: " << count(first) << endl;
     cout << "\nSum of elements: " << sum(first) << endl;
+    cout << "\nMaximum value: " << max(first) << endl;
+    cout << "\nMinimum value: " << min(first) << endl;
     return 0;
-}
+} 
