@@ -114,6 +114,7 @@ struct Node * MoveToFrontLinearSearch(struct Node *node, int key){
     struct Node *temp;
     while(node != NULL){
         if(key == node -> data){
+            // when target node has been found, then move it to the front
             temp->next = node->next;
             node->next = first;
             first = node;
@@ -124,12 +125,44 @@ struct Node * MoveToFrontLinearSearch(struct Node *node, int key){
     }
     return NULL;
 }
+
+
+// Insert method
+void insert(struct Node *node, int index, int new_value){
+    int i;
+    struct Node *temp;
+    if (index < 0 || index > count(node))
+    {
+        return;
+    }
+
+    temp = (struct Node*)malloc(sizeof(struct Node));
+    temp->data = new_value;
+    if(index == 0){
+        temp->next = first;
+        first = temp;
+    }else{
+        // 1 2 5 3
+        // insert 4 at index 2
+        // therfore
+        // 1 2 4 5 3
+        // this happens because it sets the next value of 4 to be the next value of 2 which is 5 initially
+        // then set 2 to have the next value of 4.
+        for (i = 0; i < index - 1; i++){
+            node = node->next;
+        }
+        temp->next = node->next;
+        node->next = temp;
+    }
+}
+
 int main()
 {
     struct Node *temp, *temp2;
     int A[] = {3, 5, 7, 10, -100, 80, 15, 8, 12, 20};
     int n = sizeof(A) / sizeof(A[0]);
     create(A, n);
+    insert(first, 4, 90);
     cout << "Iterative display: ";
     display(first);
     cout << "\nRecursive display: ";
@@ -139,15 +172,26 @@ int main()
     cout << "\nMaximum value: " << max(first) << endl;
     cout << "\nMinimum value: " << min(first) << endl;
     temp = LinearSearch(first, 12);
-    temp2 = MoveToFrontLinearSearch(first, 12);
-    if (temp && temp2)
+    temp2 = MoveToFrontLinearSearch(first, 80);
+
+    if (temp)
     {
         cout << "\nRecursive linear search: Found value of " << temp->data << " in linked list"<< endl;
+    }
+    else
+    {
+        cout << "Recursive linear search: Searched value not found" << endl;
+    }
+
+    if (temp2)
+    {
         cout << "\nMove to front linear search: Found value of " << temp2->data << " in linked list"<< endl;
     }
     else
     {
-        cout << "Searched value not found" << endl;
+        cout << "Move to front linear search: Searched value not found" << endl;
     }
+    
+    display(first);
     return 0;
 } 
