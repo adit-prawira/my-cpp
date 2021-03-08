@@ -96,8 +96,20 @@ int min(struct Node *node){
     }
     return INT32_MAX;
 }
+
+// Linear Search
+struct Node * LinearSearch(struct Node *node, int key){
+    if(node != NULL){
+        if(key == node -> data){
+            return node;
+        }
+        return LinearSearch(node->next, key);
+    }
+    return NULL;
+}
 int main()
 {
+    struct Node *temp;
     int A[] = {3, 5, 7, 10, -100, 80, 15, 8, 12, 20};
     int n = sizeof(A) / sizeof(A[0]);
     create(A, n);
@@ -109,5 +121,11 @@ int main()
     cout << "\nSum of elements: " << sum(first) << endl;
     cout << "\nMaximum value: " << max(first) << endl;
     cout << "\nMinimum value: " << min(first) << endl;
+    temp = LinearSearch(first, 6);
+    if(temp){
+        cout << "\nFound value of " << temp->data << " in linked list"<< endl;
+    }else{
+        cout << "Searched value not found" << endl;
+    }
     return 0;
 } 
