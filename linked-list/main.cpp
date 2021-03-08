@@ -183,6 +183,35 @@ void sort_insert(struct Node *node, int new_value){
         }
     }
 }
+int delete_node(struct Node *node, int index){
+    struct Node *tail=NULL;
+    int x = -1;
+    int i;
+    // validate index
+    if(index < 1 || index > count(node)){
+        cout << "Out of range index" << endl;
+        return -1;
+    }
+    // the condition where we want to delete the first node
+    if(index == 1){
+        tail = first;
+        x = first->data;
+        first = first->next;
+        delete tail;
+        cout << "Deleting " << x << " from index " << index;
+        return x;
+    }else{
+        for (i = 0; i < index - 1; i++){
+            tail = node;
+            node = node->next;
+        }
+        tail->next = node->next;
+        x = node->data;
+        cout << "Deleting " << x << " from index " << index;
+        delete node;
+        return x;
+    }
+}
 
 void test1(){
     struct Node *temp, *temp2;
@@ -228,7 +257,12 @@ void test2(){
     sort_insert(first, 15);
     cout << "\nSorted Insert: ";
     display(first);
-    cout << endl;   
+    cout << endl;
+
+    delete_node(first, 2);
+    cout << "\nNew node: ";
+    display(first);
+    cout << endl;
 }
 
 int main()
