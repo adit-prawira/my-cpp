@@ -283,9 +283,34 @@ void test2(){
     }
 }
 
+void remove_duplicate(struct Node *node){
+    // node is the tail pointer for temp_node
+    struct Node *temp_node = node->next;
+    
+    while(temp_node != NULL){
+        if(node->data != temp_node->data){
+            node = temp_node;
+            temp_node = temp_node->next;
+        }else{
+            node->next = temp_node->next;
+            delete temp_node;
+            temp_node = node->next;
+        }
+    }
+
+}
+void test3(){
+    int A[] = {10, 20, 20, 20, 30, 40, 50};
+    create(A, 7);
+    remove_duplicate(first);
+    display(first);
+
+}
+
 int main()
 {
     //test1();
-    test2();
+    //test2();
+    test3();
     return 0;
 } 
