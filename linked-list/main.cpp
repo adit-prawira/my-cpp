@@ -130,17 +130,17 @@ struct Node * MoveToFrontLinearSearch(struct Node *node, int key){
 // Insert method
 void insert(struct Node *node, int index, int new_value){
     int i;
-    struct Node *temp;
+    struct Node *new_node;
     if (index < 0 || index > count(node))
     {
         return;
     }
 
-    temp = (struct Node*)malloc(sizeof(struct Node));
-    temp->data = new_value;
+    new_node = (struct Node*)malloc(sizeof(struct Node));
+    new_node->data = new_value;
     if(index == 0){
-        temp->next = first;
-        first = temp;
+        new_node->next = first;
+        first = new_node;
     }else{
         // 1 2 5 3
         // insert 4 at index 2
@@ -151,13 +151,40 @@ void insert(struct Node *node, int index, int new_value){
         for (i = 0; i < index - 1; i++){
             node = node->next;
         }
-        temp->next = node->next;
-        node->next = temp;
+        new_node->next = node->next;
+        node->next = new_node;
     }
 }
 
-int main()
-{
+// insert element in sorted manner
+void sort_insert(struct Node *node, int new_value){
+
+    struct Node *new_node, *tail=NULL;
+    new_node = (struct Node *)malloc(sizeof(struct Node));
+    new_node->data = new_value;
+    new_node->next = NULL;
+
+    // Want to know if it is the first node that is being created which means first is hasn't been created yet
+    if(first == NULL){
+        first = new_node;
+    }else{
+        // node is defined and the data value of the current node is less than the new_value
+        // then set the next value of the new_value is the next value of the node and set the next value of the node as the new value.
+        while(node && node->data < new_value){
+            tail = node;
+            node = node->next;
+        }
+        if(node == first){
+            new_node->next = first;
+            first = new_node;
+        }else{
+            new_node->next = tail->next;
+            tail->next = new_node;
+        }
+    }
+}
+
+void test1(){
     struct Node *temp, *temp2;
     int A[] = {3, 5, 7, 10, -100, 80, 15, 8, 12, 20};
     int n = sizeof(A) / sizeof(A[0]);
@@ -193,5 +220,20 @@ int main()
     }
     
     display(first);
+}
+void test2(){
+    int A[] = {10, 20, 30, 40, 50};
+    create(A, 5);
+    sort_insert(first, 35);
+    sort_insert(first, 15);
+    cout << "\nSorted Insert: ";
+    display(first);
+    cout << endl;   
+}
+
+int main()
+{
+    //test1();
+    test2();
     return 0;
 } 
