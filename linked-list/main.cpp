@@ -41,11 +41,32 @@ void display(struct Node *node){
     cout << endl;
 }
 
+//recursive display
+void rec_display(struct Node *node){
+    if(node != NULL){
+        cout << node->data << " ";
+        return rec_display(node->next);
+    }
+    cout << endl; //
+}
+
+int count(struct Node *node){
+    if(node != NULL){
+        return count(node->next) + 1;
+    }else{
+        return 0;
+    }
+}
 int main()
 {
-    int A[] = {3, 5, 7, 10, 15};
+    int A[] = {3, 5, 7, 10, 15, 8, 12, 20};
     int n = sizeof(A) / sizeof(A[0]);
     create(A, n);
+    cout << "Iterative display: ";
     display(first);
+    cout << "\nRecursive display: ";
+    rec_display(first);
+    cout << "\nNumber of elements: " << count(first) << endl;
+
     return 0;
 }
