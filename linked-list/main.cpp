@@ -213,6 +213,19 @@ int delete_node(struct Node *node, int index){
     }
 }
 
+int is_sorted(struct Node *node){
+    // minimum value of 4-byte integer
+    int x = -65536;
+    while(node != NULL){
+        if(node->data < x){
+            return 0;
+        }
+        x = node->data;
+        node = node->next;
+    }
+    return 1;
+}
+
 void test1(){
     struct Node *temp, *temp2;
     int A[] = {3, 5, 7, 10, -100, 80, 15, 8, 12, 20};
@@ -263,6 +276,11 @@ void test2(){
     cout << "\nNew node: ";
     display(first);
     cout << endl;
+    if(is_sorted(first) == 1){
+        cout << "Linked list is sorted" << endl;
+    }else{
+        cout << "Linked list is not sorted" << endl;
+    }
 }
 
 int main()
