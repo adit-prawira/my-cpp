@@ -5,7 +5,7 @@ using namespace std;
 struct Node{
     int data;
     struct Node *next;
-} * first = NULL;
+} *first = NULL, *second = NULL, *third=NULL;
 
 void create(int A[], int n){
     int i;
@@ -31,6 +31,29 @@ void create(int A[], int n){
     }
 }
 
+void create_second(int A[], int n){
+    int i;
+    struct Node *temp, *last;
+
+    //Zeroth element is created
+    second = (struct Node *)malloc(sizeof(struct Node));
+    second->data = A[0];
+    second->next = NULL;
+    last = second;
+
+    // Creating the next elements
+    for (i = 1; i < n; i++){
+        temp = (struct Node *)malloc(sizeof(struct Node));
+        temp->data = A[i];
+        temp->next = NULL;
+        // set next value of the the latest last which is 0th Node .next = 1th Node value
+        // then change the last value as 1th Node, where the 1th Node.next = NULL.
+        // Then set next value of the the latest last which is 1th Node .next = 2nd Node value
+        // then change the last value as 2nd Node, where the 2nd Node.next = NULL, and so on.
+        last->next = temp;
+        last = temp;
+    }
+}
 void display(struct Node *node){
     while(node != NULL){
         cout << node->data << " ";
@@ -344,6 +367,16 @@ void recursive_reverse(struct Node *previous_node, struct Node *current_node){
         first = previous_node;
     }
 }
+
+void concat(struct Node *node1, struct Node *node2){
+    third = node1;
+    while(node1->next != NULL){
+        node1 = node1->next;
+    }
+    node1->next = node2;
+
+}
+
 void test3(){
     int A[] = {10, 10,10, 20, 20, 20, 30, 40,40,40, 50};
     int n = sizeof(A) / sizeof(A[0]);
@@ -362,11 +395,30 @@ void test4(){
     display(first);
 }
 
+void test5(){
+    int A[] = {10, 20, 30, 40, 50};
+    int B[] = {1,2,3,4,5};
+    int n_A = sizeof(A) / sizeof(A[0]);
+    int n_B = sizeof(B) / sizeof(B[0]);
+
+    create(A, n_A);
+    create_second(B, n_B);  
+    cout << "First LinkedList: ";
+    display(first);
+    cout <<"\nSecond LinkedList: ";
+    display(second);
+
+    concat(first, second);
+    cout << "\nConcatinated linkedlist: ";
+    display(third);
+}
 int main()
 {
     //test1();
     //test2();
     //test3();
-    test4();
+    //test4();
+    test5();
+
     return 0;
 } 
