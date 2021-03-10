@@ -374,7 +374,39 @@ void concat(struct Node *node1, struct Node *node2){
         node1 = node1->next;
     }
     node1->next = node2;
+}
 
+void merge(struct Node *node1, struct Node *node2){
+    struct Node *last;
+    if(node1 -> data < node2 -> data){
+        third = last = node1;
+        node1 = node1->next;
+        third->next = NULL;
+    }else{
+        third = last = node2;
+        node2 = node2->next;
+        third->next = NULL;
+    }
+
+    while(node1 && node2){
+        if(node1->data < node2->data){
+            last->next = node1;
+            last = node1;
+            node1 = node1->next;
+            last->next = NULL;
+        }else{
+            last->next = node2;
+            last = node2;
+            node2 = node2->next;
+            last->next = NULL;
+        }
+    }
+    if(node1){
+        last->next = node1;
+    }
+    if(node2){
+        last->next = node2;
+    }
 }
 
 void test3(){
@@ -408,17 +440,50 @@ void test5(){
     cout <<"\nSecond LinkedList: ";
     display(second);
 
-    concat(first, second);
+    concat(second,first);
     cout << "\nConcatinated linkedlist: ";
+    display(third);
+}
+
+void test6(){
+    int A[] = {10,20,30,40,50};
+    int B[] = {5,15,25,35,45};
+    int n_A = sizeof(A) / sizeof(A[0]);
+    int n_B = sizeof(B) / sizeof(B[0]);
+
+    create(A, n_A);
+    create_second(B, n_B);  
+    merge(first,second);
+    cout << "\nMerged linkedlist: ";
     display(third);
 }
 int main()
 {
-    //test1();
-    //test2();
-    //test3();
-    //test4();
-    test5();
-
+    int choice;
+    cout << "Enter test number: ";
+    cin >> choice;
+    
+    switch(choice){
+        case 1:
+            test1();
+            break;
+        case 2:
+            test2();
+            break; 
+        case 3:
+            test3();
+            break;
+        case 4:
+            test4();
+            break;
+        case 5:
+            test5();
+            break;
+        case 6:
+            test6();
+            break;
+        default:
+            test1();
+    }
     return 0;
 } 
