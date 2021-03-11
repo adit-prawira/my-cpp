@@ -68,6 +68,34 @@ void insert(struct Node *pointer, int index, int val){
         pointer->next = new_node;
     }
 }
+
+int delete_item(struct Node *pointer, int index){
+    int i, x = -1;
+    cout << length(pointer);
+    if (index < 0 || index > length(pointer))
+    {
+        return -1;
+    }
+    if(index == 0){
+        first = first->next;
+        if(first)
+            first->previous = NULL;
+        x = pointer->data;
+        delete pointer;
+    }else{
+        for (i = 0; i < index-1; i++){
+            pointer = pointer->next;
+        }
+        (pointer->previous)->next = pointer->next;
+        if(pointer -> next != NULL){
+            (pointer->next)->previous = pointer->previous;
+        }
+        x = pointer->data;
+        delete pointer;
+    }
+    return x;
+}
+
 int main()
 {
     int A[] = {10, 20, 30, 40, 50};
@@ -76,6 +104,7 @@ int main()
     insert(first, 1, 80);
     insert(first, 0, 15);
     insert(first, length(first), 65);
+    cout << delete_item(first, 8);
     cout << "\nLinked list with length of " << length(first) << endl;
     cout << "Linked List elements: ";
     display(first);
