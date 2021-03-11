@@ -24,15 +24,61 @@ void create(int A[], int n){
 }
 
 void display(struct Node *head){
-    do{
+    static int flag = 0;
+    if(head != Head || flag ==0){
+        flag = 1;
         cout << head->data << " ";
-        head = head->next;
-    } while (head != Head);
-    cout << endl;
+        display(head->next);
+    }else{
+        cout << endl;
+    }
+    flag = 0;
+}
+int length(struct Node *pointer){
+    int count = 0;
+    do{
+        count++;
+        pointer = pointer -> next;
+    } while (pointer != Head);
+    return count;
+}
+
+void insert(struct Node *pointer, int index, int val){
+    struct Node *temp;
+    int i;
+    if(index < 0 || index > length(pointer)){
+        return;
+    }
+    if(index ==0){
+        temp = (struct Node*)malloc(sizeof(struct Node));
+        temp->data = val;
+
+        // if null then it indcates that we want to insert the first node
+        if(Head == NULL){
+            Head = temp;
+            Head->next = Head;
+        }else{
+            while(pointer -> next != Head){
+                pointer = pointer->next;
+            }
+            pointer->next = temp;
+            temp->next = Head;
+            Head = temp;
+        }
+    }else{
+        for (i = 0; i < index - 1; i++){
+            pointer = pointer->next;
+        }
+        temp = (struct Node*)malloc(sizeof(struct Node));
+        temp->data = val;
+        temp->next = pointer->next;
+        pointer->next = temp;
+    }
 }
 int main(){
     int A[] = {2, 3, 4, 5, 6};
     create(A, 5);
+    insert(Head, 3, 10);
     display(Head);
     return 0;
 }
