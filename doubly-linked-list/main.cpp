@@ -71,7 +71,6 @@ void insert(struct Node *pointer, int index, int val){
 
 int delete_item(struct Node *pointer, int index){
     int i, x = -1;
-    cout << length(pointer);
     if (index < 0 || index > length(pointer))
     {
         return -1;
@@ -96,6 +95,18 @@ int delete_item(struct Node *pointer, int index){
     return x;
 }
 
+void reverse(struct Node *pointer){
+    struct Node *temp;
+    while(pointer != NULL){
+        temp = pointer->next;
+        pointer->next = pointer->previous;
+        pointer->previous = temp;
+        pointer = pointer->previous;
+        if(pointer != NULL && pointer -> next == NULL){
+            first = pointer;
+        }
+    }
+}
 int main()
 {
     int A[] = {10, 20, 30, 40, 50};
@@ -103,10 +114,12 @@ int main()
     insert(first, 3, 70);
     insert(first, 1, 80);
     insert(first, 0, 15);
-    insert(first, length(first), 65);
-    cout << delete_item(first, 8);
+  
     cout << "\nLinked list with length of " << length(first) << endl;
     cout << "Linked List elements: ";
+    display(first);
+    cout << "\nReversed linked list: ";
+    reverse(first);
     display(first);
     return 0;
 }
