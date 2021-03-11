@@ -75,10 +75,41 @@ void insert(struct Node *pointer, int index, int val){
         pointer->next = temp;
     }
 }
+
+int delete_item(struct Node *pointer, int index){
+    struct Node *dummy;
+    int i, x;
+    if (index < 0 || index > length(pointer))
+    {
+        return -1;
+    }
+    if(index == 0){
+        while(pointer->next != Head) pointer = pointer->next;
+        x = Head->data;
+        if(Head == pointer){
+            delete Head;
+            Head = NULL;
+        }else{
+            pointer->next = Head->next;
+            delete Head;
+            Head = pointer->next;
+        }
+    }else{
+        for (i = 0; i < index - 1; i++)
+            pointer = pointer->next;
+        dummy = pointer->next;
+        pointer->next = dummy->next;
+        x = dummy->data;
+        delete dummy;
+    }
+    return x;
+}   
+
 int main(){
     int A[] = {2, 3, 4, 5, 6};
     create(A, 5);
     insert(Head, 3, 10);
+    delete_item(Head, sizeof(A)/sizeof(A[0]));
     display(Head);
     return 0;
 }
