@@ -409,6 +409,24 @@ void merge(struct Node *node1, struct Node *node2){
     }
 }
 
+int is_loop(struct Node *f){
+    struct Node *p, *q;
+    p = q = f;
+
+    // stop the process when p is equal to q because thats when the loop has been discovered.
+    // otherwise return 0 because the linked list has no loop.
+    do{
+        p = p->next;
+        q = q->next;
+        q = q ? q->next : q;
+    }while(p && q && p != q);
+    if(p == q){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
 void test3(){
     int A[] = {10, 10,10, 20, 20, 20, 30, 40,40,40, 50};
     int n = sizeof(A) / sizeof(A[0]);
@@ -457,6 +475,18 @@ void test6(){
     cout << "\nMerged linkedlist: ";
     display(third);
 }
+
+// test to check if the linked list is having a loop
+void test7(){
+    struct Node *temp1, *temp2;
+    int A[] = {10, 20, 30, 40, 50, 60};
+    int n = sizeof(A) / sizeof(A[0]);
+    create(A, n);
+    temp1 = first->next->next;
+    temp2 = first->next->next->next->next;
+    temp2->next = temp1;
+    cout << "\nLinked list is a loop? " << is_loop(first) << endl;
+}
 int main()
 {
     int choice;
@@ -481,6 +511,9 @@ int main()
             break;
         case 6:
             test6();
+            break;
+        case 7:
+            test7();
             break;
         default:
             test1();
