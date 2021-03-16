@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstring>
 #include "stack.h"
+#include <stack>
 using namespace std;
 void Stack::push(char c){
     if(is_full()){
@@ -69,17 +70,78 @@ bool is_balanced(char *C){
     return stack.is_empty() ? true : false;
 }
 
+int out_precedence(char c){
+    if (c == '+' || c == '-'){
+        return 1;
+    } else if (c == '*' || c == '/'){
+        return 3;
+    } else if (c == '^'){
+        return 6;
+    } else if (c == '('){
+        return 7;
+    } else if (c == ')'){
+        return 0;
+    }
+    return -1;
+}
+int in_precedence(char c){
+    if (c == '+' || c == '-'){
+        return 2;
+    } else if (c == '*' || c == '/'){
+        return 4;
+    } else if (c == '^'){
+        return 5;
+    } else if (c == '('){
+        return 0;
+    }
+    return -1;
+}
+
+int is_operand(char c){
+    return (c == '+' || c == '-' || c == '*' || c == '/' ||
+        c == '^' || c == '(' || c == ')');
+}
+
+char * infix_to_postfix(char *infix){
+    int i = 0, j = 0;
+    char *postfix = new char[strlen(infix)];
+    stack<char> stack;
+    while(infix[i] != '\0'){
+        if(is_operand(infix[i])){
+            postfix[j++] = infix[i++];
+        }else{
+            if(stack.empty() || out_precedence(infix[i]) > in_precedence(stack.top())){
+                stack.push(infix[i++]);
+            }else if (out_precedence(infix[i]) == in_precedence(stack.top())){
+                stack.pop();
+            }else{
+                postfix[j++] = stack.top();
+                stack.pop();
+            }
+        }
+    }
+    while(!stack.empty() && stack.top() != ')'){
+        postfix[j++] = stack.top();
+        stack.pop();
+    }
+    postfix[j] = '\0';
+    return postfix;
+}
+
 int main()
 {
     
     char E[] = "((a+b)*(c-d))";
     cout << is_balanced(E) << endl;
- 
+
     char F[] = "((a+b)*(c-d)))";
     cout << is_balanced(F) << endl;
- 
+
     char G[] = "(((a+b)*(c-d))";
     cout << is_balanced(G) << endl;
+
+    char infix[] = "a+b*c";
+    cout << infix_to_postfix(infix) << endl;
 
     return 0;
 }
