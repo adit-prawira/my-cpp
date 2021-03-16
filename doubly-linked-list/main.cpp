@@ -114,7 +114,7 @@ int main()
     insert(first, 3, 70);
     insert(first, 1, 80);
     insert(first, 0, 15);
-  
+
     cout << "\nLinked list with length of " << length(first) << endl;
     cout << "Linked List elements: ";
     display(first);
