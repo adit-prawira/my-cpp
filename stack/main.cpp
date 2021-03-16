@@ -44,7 +44,29 @@ int pop(struct Stack *stack){
     return x;
 }
 
+int peek(struct Stack stack, int index){
+    int x = -1;
+    if(stack.top-index+1 < 0){
+        cout << "Invalid index" << endl;
+    }
+    x = stack.S[stack.top - index+1];
+    return x;
+}
 
+int isEmpty(struct Stack stack){
+    return stack.top == -1;
+};
+
+int isFull(struct Stack stack){
+    return stack.top == stack.size - 1;
+};
+
+int stack_top(struct Stack stack){
+    if(!isEmpty(stack)){
+        return stack.S[stack.top];
+    }
+    return -1;
+}
 
 int main()
 {   
@@ -55,6 +77,10 @@ int main()
         push(&stack, i);
     }
     pop(&stack);
+    cout << "Stack is empty?  " << isEmpty(stack)<< endl;
+    cout << "Stack is full?  " << isFull(stack)<< endl;
+    cout << "Stack Top value: " << stack_top(stack)<< endl;
+    cout << "Peek value: " << peek(stack, 5)<< endl;
     display(stack);
     return 0;
 }
