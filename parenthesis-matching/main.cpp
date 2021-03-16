@@ -105,29 +105,32 @@ int is_operand(char c){
 char * infix_to_postfix(char *infix){
     int i = 0, j = 0;
     char *postfix = new char[strlen(infix)];
-    stack<char> stack;
+    Stack stack(strlen(infix));
     while(infix[i] != '\0'){
         if(is_operand(infix[i])){
             postfix[j++] = infix[i++];
         }else{
-            if(stack.empty() || out_precedence(infix[i]) > in_precedence(stack.top())){
+            if(stack.is_empty() || out_precedence(infix[i]) > in_precedence(stack.stack_top())){
                 stack.push(infix[i++]);
-            }else if (out_precedence(infix[i]) == in_precedence(stack.top())){
+            }else if (out_precedence(infix[i]) == in_precedence(stack.stack_top())){
                 stack.pop();
             }else{
-                postfix[j++] = stack.top();
+                postfix[j++] = stack.stack_top();
                 stack.pop();
             }
         }
     }
-    while(!stack.empty() && stack.top() != ')'){
-        postfix[j++] = stack.top();
+    while(!stack.is_empty() && stack.stack_top() != ')'){
+        postfix[j++] = stack.stack_top();
         stack.pop();
     }
     postfix[j] = '\0';
     return postfix;
 }
 
+int evaluate(char *postfix){
+    
+}
 int main()
 {
     
