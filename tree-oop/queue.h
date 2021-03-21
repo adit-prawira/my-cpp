@@ -9,7 +9,7 @@ class Queue{
         int front;
         int rear;
         int size;
-        Node *(*Q);
+        Node **Q;
     public:
         Queue(){
             front = rear = -1;
@@ -18,14 +18,14 @@ class Queue{
         }
 
         Queue(int size){
-            front = rear = -1;
             this->size = size;
+            front = rear = -1;
             Q = new Node*[this->size];
         }
 
         void enqueue(Node *val);
         Node *dequeue();
-        int is_empty(Queue q);
+        bool is_empty() { return front == rear; };
 };
 
 void Queue::enqueue(Node *val){
@@ -41,13 +41,11 @@ Node* Queue::dequeue(){
     if(front == rear){
         cout << "Queue is empty" << endl;
     }else{
-        val = Q[front++];
+        front++;
+        val = Q[front];
     }
     return val;
 }
 
-int Queue::is_empty(Queue q)
-{
-    return q.front==q.rear;
-}
+
 #endif
