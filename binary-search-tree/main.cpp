@@ -19,6 +19,7 @@ void insert(int key){
         new_node = (struct Node*)malloc(sizeof(struct Node));
         new_node->data = key;
         new_node->left_child = new_node->right_child = NULL;
+        root = new_node;
         // finish process after creating the very first Node
         return;
     }
@@ -54,8 +55,15 @@ void in_order(struct Node *p){
         in_order(p->right_child);
     }
 }
+
 int main()
 {
-
+    insert(10);
+    insert(5);
+    insert(20);
+    insert(8);
+    insert(30);
+    in_order(root);
+    cout << endl;
     return 0;
 }
