@@ -70,19 +70,40 @@ struct Node* search(int key){
     }
     return NULL;
 }
+struct Node * recursive_insert(struct Node *p, int key){
+    if(p == NULL){
+        struct Node *temp;
+        temp = (struct Node *)malloc(sizeof(struct Node));
+        temp->data = key;
+        temp->left_child = temp->right_child = NULL;
+        return temp;
+    }
+    if(key < p->data){
+        p->left_child = recursive_insert(p->left_child, key);
+    }else if (key > p->data){
+        p->right_child = recursive_insert(p->right_child, key);
+    }
+    return p;
+}
 
 int main()
 {
     struct Node *searched_value;
     int key = 200;
-    insert(10);
-    insert(5);
-    insert(20);
-    insert(8);
-    insert(30);
+    // insert(10);
+    // insert(5);
+    // insert(20);
+    // insert(8);
+    // insert(30);
+    // in_order(root);
+    // cout << endl;
+    root= recursive_insert(root, 10);
+    recursive_insert(root, 5);
+    recursive_insert(root, 20);
+    recursive_insert(root, 8);
+    recursive_insert(root, 30);
     in_order(root);
     cout << endl;
-
     searched_value = search(key);
     if(searched_value != NULL){
         cout << "Value of " << key << " is found in tree" << endl;
