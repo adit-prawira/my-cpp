@@ -86,17 +86,93 @@ struct Node * recursive_insert(struct Node *p, int key){
     return p;
 }
 
-int main()
-{
+int height(struct Node*p){
+    int x, y;
+    if (p == NULL)
+    {
+        return 0;
+    }
+    x = height(p->left_child);
+    y = height(p->right_child);
+    return x > y ? x + 1 : y + 1;
+}
+
+struct Node* in_predecessor(struct Node *p){
+    while(p && p->right_child != NULL){
+        p = p->right_child;
+    }
+    return p;
+}
+
+struct Node* in_successor(struct Node *p){
+    while(p && p->left_child != NULL){
+        p = p->left_child;
+    }
+    return p;
+}
+struct Node* delete_node(struct Node*p, int key){
+
+    struct Node *q;
+    if (p == NULL)
+    {
+        return NULL;
+    }
+    if(p->left_child == NULL && p->right_child==NULL){
+        if(p==root){
+            root = NULL;
+        }
+        delete p;
+        return NULL;
+    }
+    if(key < p->data){
+        p->left_child = delete_node(p->left_child, key);
+    }else if(key > p->data){
+        p->right_child = delete_node(p->right_child, key);
+    }else{
+        if(height(p->left_child) > height(p->right_child)){
+            q = in_predecessor(p->left_child);
+            p->data = q->data;
+            p->left_child = delete_node(p->left_child, q->data);
+        }else{
+            q = in_predecessor(p->right_child);
+            p->data = q->data;
+            p->right_child = delete_node(p->right_child, q->data);
+        }
+    }
+    return p;
+}
+
+void test1(){
+    struct Node *searched_value;
+    int key = 20;
+    insert(10);
+    insert(5);
+    insert(20);
+    insert(8);
+    insert(30);
+    cout << "Tree: ";
+    in_order(root);
+    cout << endl;
+    searched_value = search(key);
+    if(searched_value != NULL){
+        cout << "Value of " << key << " is found in tree" << endl;
+    }else{
+        cout << "Value of " << key << " is not found" << endl;
+    }
+    struct Node *deleted_element;
+    deleted_element = delete_node(root, key);
+    if(deleted_element != NULL){
+        cout << "Deleted " << key << " from tree" << endl;
+    }else{
+        cout << "Value of " << key << " is not found" << endl;
+    }
+    cout << "New Tree: ";
+    in_order(root);
+    cout << endl;
+}
+void test2(){
     struct Node *searched_value;
     int key = 200;
-    // insert(10);
-    // insert(5);
-    // insert(20);
-    // insert(8);
-    // insert(30);
-    // in_order(root);
-    // cout << endl;
     root= recursive_insert(root, 10);
     recursive_insert(root, 5);
     recursive_insert(root, 20);
@@ -109,6 +185,20 @@ int main()
         cout << "Value of " << key << " is found in tree" << endl;
     }else{
         cout << "Value of " << key << " is not found" << endl;
+    }
+}
+int main()
+{
+    int choice;
+    cout << "Choose test options: ";
+    cin >> choice;
+    switch(choice){
+        case 1:
+            test1();
+            break;
+        case2:
+            test2();
+            break;
     }
 
     return 0;
