@@ -56,8 +56,25 @@ void in_order(struct Node *p){
     }
 }
 
+// Search and return node of the given key if exist within the tree
+struct Node* search(int key){
+    struct Node *temp = root;
+    while(temp != NULL){
+        if(key == temp->data ){
+            return temp;
+        }else if(key < temp->data){
+            temp = temp->left_child;
+        }else{
+            temp = temp->right_child;
+        }
+    }
+    return NULL;
+}
+
 int main()
 {
+    struct Node *searched_value;
+    int key = 200;
     insert(10);
     insert(5);
     insert(20);
@@ -65,5 +82,13 @@ int main()
     insert(30);
     in_order(root);
     cout << endl;
+
+    searched_value = search(key);
+    if(searched_value != NULL){
+        cout << "Value of " << key << " is found in tree" << endl;
+    }else{
+        cout << "Value of " << key << " is not found" << endl;
+    }
+
     return 0;
 }
